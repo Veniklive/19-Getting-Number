@@ -3,16 +3,24 @@
  * @returns {String} Number to calculate factorial.
  */
 
-function getNumber(desireNum, processedNum = 1, sequence = "1") {
+function getNumber(desireNum) {
   if (!Number.isInteger(desireNum) || desireNum < 0) return null;
-  if (processedNum === desireNum) return `"${desireNum}": ${sequence}`;
-  if (processedNum > desireNum) return null;
 
-  return (
-    getNumber(desireNum, processedNum * 3, `(${sequence} * 3)`) ||
-    getNumber(desireNum, processedNum + 5, `(${sequence} + 5)`) ||
-    null
-  );
+  function algoritm(processedNum, sequence) {
+    if (processedNum === desireNum) {
+      return `"${desireNum}": ${sequence}`;
+    }
+    if (processedNum > desireNum) {
+      return null;
+    }
+    return (
+      algoritm(processedNum * 3, `(${sequence} * 3)`) ||
+      algoritm(processedNum + 5, `(${sequence} + 5)`) ||
+      null
+    );
+  }
+
+  return algoritm(1, "1");
 }
 
 console.log(getNumber(13)); // "13": (((1 * 3) + 5) + 5)
